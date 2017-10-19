@@ -1,0 +1,73 @@
+<body>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<div id="root"></div>
+
+<style>
+.box {
+  border: 1px solid #333;
+}
+
+.box--large {
+  width: 180px;
+  height: 180px;
+}
+
+.box--medium {
+  width: 120px;
+  height: 120px;
+}
+
+.box--small {
+  width: 60px;
+  height: 60px;
+}
+</style>
+
+<script type="text/babel">
+function Box({
+  style,
+  size,
+  className = '',
+  ...rest
+}) {
+  const sizeClassName = size ? `box--${size}` : ''
+  return (
+    <div
+      className={`box ${className} ${sizeClassName}`}
+      style={{paddingLeft: 20, ...style}}
+      {...rest}
+    />
+  )
+}
+const element = (
+  <div>
+    <Box
+      size="small"
+      style={{backgroundColor: 'lightblue'}}
+    >
+      small box
+    </Box>
+    <Box
+      size="medium"
+      style={{backgroundColor: 'pink'}}
+    >
+      medium box
+    </Box>
+    <Box
+      size="large"
+      style={{backgroundColor: 'orange'}}
+    >
+      large box
+    </Box>
+  </div>
+)
+
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+)
+</script>
+</body>
