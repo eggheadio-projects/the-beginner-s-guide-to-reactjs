@@ -1,0 +1,31 @@
+<div id="root"></div>
+<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<script type="text/babel">
+class NameForm extends React.Component {
+  handleSubmit = event => {
+    event.preventDefault()
+    alert(this.input.value)
+  }
+
+  render() {
+    const {defaultName} = this.props
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            defaultValue={defaultName}
+            ref={node => (this.input = node)}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    )
+  }
+}
+
+ReactDOM.render(<NameForm defaultName="Marcy" />, document.getElementById('root'))
+</script>
