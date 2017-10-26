@@ -1,0 +1,81 @@
+<body>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<script src="https://unpkg.com/vanilla-tilt@1.4.1/dist/vanilla-tilt.min.js"></script>
+<div id="root"></div>
+
+<style>
+/*
+Taken from the vanilla-tilt.js demo site:
+https://micku7zu.github.io/vanilla-tilt.js/index.html
+*/
+.tilt-root {
+  height: 150px;
+  background-color: red;
+  width: 200px;
+  background-image: -webkit-linear-gradient(315deg, #ff00ba 0%, #fae713 100%);
+  background-image: linear-gradient(135deg, #ff00ba 0%, #fae713 100%);
+  transform-style: preserve-3d;
+  will-change: transform;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+}
+.tilt-child {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translateZ(30px) translateX(-50%) translateY(-50%);
+  box-shadow: 0 0 50px 0 rgba(51, 51, 51, 0.3);
+  background-color: white;
+}
+
+.totally-centered {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>
+
+<script type="text/babel">
+class Tilt extends React.Component {
+  componentDidMount() {
+    VanillaTilt.init(this.rootNode, {
+      max: 25,
+      speed: 400,
+      glare: true,
+      'max-glare': 0.5,
+    })
+  }
+  render() {
+    return (
+      <div
+        ref={node => (this.rootNode = node)}
+        className="tilt-root"
+      >
+        <div className="tilt-child">
+          <div {...this.props} />
+        </div>
+      </div>
+    )
+  }
+}
+const element = (
+  <div className="totally-centered">
+    <Tilt>
+      <div className="totally-centered">
+        vanilla-tilt.js
+      </div>
+    </Tilt>
+  </div>
+)
+
+ReactDOM.render(
+  element,
+  document.getElementById('root'),
+)
+</script>
+</body>
