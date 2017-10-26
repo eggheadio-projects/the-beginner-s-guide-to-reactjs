@@ -1,0 +1,64 @@
+<body>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<script src="https://unpkg.com/axios@0.16.2/dist/axios.min.js"></script>
+<div id="root"></div>
+
+<script type="text/babel">
+class UserCompany extends React.Component {
+  state = {company: undefined, loaded: false}
+  componentDidMount() {
+    axios({
+      url: 'https://api.github.com/graphql',
+      method: 'post',
+      data: {
+        query: `{
+          user(login: "${this.props.username}") {
+            company
+          }
+        }`,
+      },
+      headers: {
+        Authorization: `bearer I DELETED THE TOKEN. YOU'LL HAVE TO MAKE YOUR OWN`,
+      },
+    }).then(
+      response => {
+        this.setState({
+          loaded: true,
+          company:
+            response.data.data.user.company,
+        })
+      },
+      error => {
+        this.setState({
+          error,
+          loaded: true,
+        })
+      },
+    )
+  }
+  render() {
+    return this.state.loaded
+      ? this.state.error
+        ? 'ERROR (You probably need to add your own token)'
+        : this.state.company || 'Unknown'
+      : '...'
+  }
+}
+const username = 'mzabriskie'
+const element = (
+  <div>
+    <div>
+      {`@${username} works at `}
+      <UserCompany username={username} />
+    </div>
+  </div>
+)
+
+ReactDOM.render(
+  element,
+  document.getElementById('root'),
+)
+</script>
+</body>
