@@ -1,0 +1,76 @@
+<div id="root"></div>
+<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<script type="text/babel">
+class NameForm extends React.Component {
+  state = {value: ''}
+  componentDidMount() {
+    this.onValueChange()
+  }
+
+  handleChange = event => {
+    const {value} = event.target
+    this.onValueChange(value)
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    if (!this.state.error) {
+      alert(this.state.value)
+    }
+  }
+
+  onValueChange(value = this.state.value) {
+    const error = this.props.getErrorMessage(
+      value,
+    )
+    this.setState({value, error})
+  }
+
+  render() {
+    const {value, error} = this.state
+    const hasError = Boolean(error)
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            value={value}
+            onChange={this.handleChange}
+          />
+        </label>
+        {hasError ? (
+          <div style={{color: 'red'}}>
+            {error}
+          </div>
+        ) : (
+          <input type="submit" value="Submit" />
+        )}
+      </form>
+    )
+  }
+}
+
+function App() {
+  return (
+    <NameForm
+      getErrorMessage={value => {
+        if (value.length < 3) {
+          return `Value must be at least 3 characters, but is only ${value.length}`
+        }
+        if (!value.includes('s')) {
+          return `Value does not include "s" but it should!`
+        }
+        return null
+      }}
+    />
+  )
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root'),
+)
+</script>
