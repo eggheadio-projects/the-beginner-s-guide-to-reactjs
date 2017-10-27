@@ -41,8 +41,12 @@ class UserCompany extends React.Component {
   componentDidMount() {
     this.fetchCompany()
   }
-  componentDidUpdate() {
-    this.fetchCompany()
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.username !== this.props.username
+    ) {
+      this.fetchCompany()
+    }
   }
   render() {
     return this.state.loaded
