@@ -1,0 +1,138 @@
+<body>
+<div id="root"></div>
+<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+<script type="text/babel">
+const allItems = [
+  {id: 'a', value: 'apple'},
+  {id: 'o', value: 'orange'},
+  {id: 'g', value: 'grape'},
+  {id: 'p', value: 'pear'},
+]
+class App extends React.Component {
+  state = {items: []}
+  addItem = () => {
+    this.setState(({items}) => ({
+      items: [
+        ...items,
+        allItems.find(i => !items.includes(i)),
+      ],
+    }))
+  }
+  removeItem = item => {
+    this.setState(({items}) => ({
+      items: items.filter(i => i !== item),
+    }))
+  }
+  render() {
+    const {items} = this.state
+    return (
+      <div>
+        <button
+          disabled={
+            items.length >= allItems.length
+          }
+          onClick={this.addItem}
+        >
+          +
+        </button>
+        {items.map((i, index) => (
+          <div>
+            <button
+              onClick={() => this.removeItem(i)}
+            >
+              -
+            </button>
+            <input defaultValue={i.value} />
+          </div>
+        ))}
+      </div>
+    )
+  }
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root'),
+)
+</script>
+<script type="text/babel">
+const allItems = [
+  {id: 'a', value: 'apple'},
+  {id: 'o', value: 'orange'},
+  {id: 'g', value: 'grape'},
+  {id: 'p', value: 'pear'},
+]
+class FocusDemo extends React.Component {
+  state = {
+    items: allItems,
+  }
+  componentDidMount() {
+    setInterval(this.randomizeItems, 1000)
+  }
+  randomizeItems = () => {
+    this.setState(({items}) => ({
+      items: shuffle(items),
+    }))
+  }
+  render() {
+    return (
+      <div>
+        <div>
+          <h1>Without Key</h1>
+          {this.state.items.map(item => (
+            <input value={item.value} />
+          ))}
+        </div>
+        <div>
+          <h1>With Key as Index</h1>
+          {this.state.items.map((item, index) => (
+            <input
+              key={index}
+              value={item.value}
+            />
+          ))}
+        </div>
+        <div>
+          <h1>With Key</h1>
+          {this.state.items.map(item => (
+            <input
+              key={item.id}
+              value={item.value}
+            />
+          ))}
+        </div>
+      </div>
+    )
+  }
+}
+
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(
+      Math.random() * currentIndex,
+    )
+    currentIndex -= 1
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex]
+    array[currentIndex] = array[randomIndex]
+    array[randomIndex] = temporaryValue
+  }
+
+  return array
+}
+
+// ReactDOM.render(
+//   <FocusDemo />,
+//   document.getElementById('root'),
+// )
+</script>
+</body>

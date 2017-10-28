@@ -4,6 +4,15 @@
 <script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
 <script type="text/babel">
-// TODO
+function Message({shouldRender}) {
+  return shouldRender ? (
+    <div>Hello! I rendered!</div>
+  ) : null
+}
+
+ReactDOM.render(
+  <Message shouldRender={true} />,
+  document.getElementById('root'),
+)
 </script>
 </body>
