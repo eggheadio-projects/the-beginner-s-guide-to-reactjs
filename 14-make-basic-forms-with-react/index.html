@@ -7,29 +7,31 @@
 class NameForm extends React.Component {
   handleSubmit = event => {
     event.preventDefault()
-    alert(this.input.value)
+    console.log({target: event.target})
+    console.log(event.target[0].value)
+    console.log(
+      event.target.elements.username.value,
+    )
+    console.log(this.inputNode.value)
   }
-
   render() {
-    const {defaultName} = this.props
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
           Name:
           <input
             type="text"
-            defaultValue={defaultName}
-            ref={node => (this.input = node)}
+            name="username"
+            ref={node => (this.inputNode = node)}
           />
         </label>
-        <input type="submit" value="Submit" />
+        <button type="submit">Submit</button>
       </form>
     )
   }
 }
-
 ReactDOM.render(
-  <NameForm defaultName="Marcy" />,
+  <NameForm />,
   document.getElementById('root'),
 )
 </script>
