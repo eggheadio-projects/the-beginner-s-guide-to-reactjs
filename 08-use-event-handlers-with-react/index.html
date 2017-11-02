@@ -1,7 +1,7 @@
 <body>
 <div id="root"></div>
-<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
 <script type="text/babel">
 const state = {eventCount: 0, username: ''}
@@ -24,11 +24,15 @@ function App() {
 }
 
 function increment() {
-  setState({eventCount: state.eventCount + 1})
+  setState({
+    eventCount: state.eventCount + 1,
+  })
 }
 
 function updateUsername(event) {
-  setState({username: event.target.value})
+  setState({
+    username: event.target.value,
+  })
 }
 
 function setState(newState) {
