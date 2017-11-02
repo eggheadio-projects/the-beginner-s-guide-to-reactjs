@@ -1,77 +1,71 @@
 <body>
 <div id="root"></div>
-<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
 <script type="text/babel">
 class NameForm extends React.Component {
-  state = {value: ''}
-  componentDidMount() {
-    this.onValueChange()
-  }
-
-  handleChange = event => {
-    const {value} = event.target
-    this.onValueChange(value)
-  }
-
+  state = {error: this.props.getErrorMessage('')}
   handleSubmit = event => {
     event.preventDefault()
-    if (!this.state.error) {
-      alert(this.state.value)
-    }
-  }
-
-  onValueChange(value = this.state.value) {
+    const value =
+      event.target.elements.username.value
     const error = this.props.getErrorMessage(
       value,
     )
-    this.setState({value, error})
+    if (error) {
+      alert(`error: ${error}`)
+    } else {
+      alert(`success: ${value}`)
+    }
+  }
+  handleChange = event => {
+    const {value} = event.target
+    this.setState({
+      error: this.props.getErrorMessage(value),
+    })
   }
 
   render() {
-    const {value, error} = this.state
-    const hasError = Boolean(error)
+    const {error} = this.state
     return (
       <form onSubmit={this.handleSubmit}>
         <label>
           Name:
           <input
             type="text"
-            value={value}
             onChange={this.handleChange}
+            name="username"
           />
         </label>
-        {hasError ? (
+        {error ? (
           <div style={{color: 'red'}}>
             {error}
           </div>
-        ) : (
-          <input type="submit" value="Submit" />
-        )}
+        ) : null}
+        <button
+          disabled={Boolean(error)}
+          type="submit"
+        >
+          Submit
+        </button>
       </form>
     )
   }
 }
 
-function App() {
-  return (
-    <NameForm
-      getErrorMessage={value => {
-        if (value.length < 3) {
-          return `Value must be at least 3 characters, but is only ${value.length}`
-        }
-        if (!value.includes('s')) {
-          return `Value does not include "s" but it should!`
-        }
-        return null
-      }}
-    />
-  )
-}
-
 ReactDOM.render(
-  <App />,
+  <NameForm
+    getErrorMessage={value => {
+      if (value.length < 3) {
+        return `Value must be at least 3 characters, but is only ${value.length}`
+      }
+      if (!value.includes('s')) {
+        return `Value does not include "s" but it should!`
+      }
+      return null
+    }}
+  />,
   document.getElementById('root'),
 )
 </script>
