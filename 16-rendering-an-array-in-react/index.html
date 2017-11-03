@@ -1,22 +1,24 @@
 <body>
 <div id="root"></div>
-<script src="https://unpkg.com/react@16.0.0-rc.3/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16.0.0-rc.3/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/react@16.0.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.0.0/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
 <script type="text/babel">
-const allItems = [
-  {id: 'a', value: 'apple'},
-  {id: 'o', value: 'orange'},
-  {id: 'g', value: 'grape'},
-  {id: 'p', value: 'pear'},
-]
 class App extends React.Component {
+  static allItems = [
+    {id: 'a', value: 'apple'},
+    {id: 'o', value: 'orange'},
+    {id: 'g', value: 'grape'},
+    {id: 'p', value: 'pear'},
+  ]
   state = {items: []}
   addItem = () => {
     this.setState(({items}) => ({
       items: [
         ...items,
-        allItems.find(i => !items.includes(i)),
+        App.allItems.find(
+          i => !items.includes(i),
+        ),
       ],
     }))
   }
@@ -25,26 +27,28 @@ class App extends React.Component {
       items: items.filter(i => i !== item),
     }))
   }
+
   render() {
     const {items} = this.state
     return (
       <div>
         <button
           disabled={
-            items.length >= allItems.length
+            items.length >= App.allItems.length
           }
           onClick={this.addItem}
         >
           +
         </button>
         {items.map((i, index) => (
-          <div>
+          <div key={i.id}>
             <button
               onClick={() => this.removeItem(i)}
             >
               -
             </button>
-            <input defaultValue={i.value} />
+            {i.value}:
+            <input />
           </div>
         ))}
       </div>
@@ -58,15 +62,14 @@ ReactDOM.render(
 )
 </script>
 <script type="text/babel">
-const allItems = [
-  {id: 'a', value: 'apple'},
-  {id: 'o', value: 'orange'},
-  {id: 'g', value: 'grape'},
-  {id: 'p', value: 'pear'},
-]
 class FocusDemo extends React.Component {
   state = {
-    items: allItems,
+    items: [
+      {id: 'a', value: 'apple'},
+      {id: 'o', value: 'orange'},
+      {id: 'g', value: 'grape'},
+      {id: 'p', value: 'pear'},
+    ],
   }
   componentDidMount() {
     setInterval(this.randomizeItems, 1000)
