@@ -1,23 +1,36 @@
-<body>
-<div id="root"></div>
-<script src="https://unpkg.com/react@16.3.0/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16.3.0/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
-<script type="text/babel">
-const rootElement = document.getElementById(
-  'root',
-)
-// const element = React.createElement('div', {
-//   className: 'container',
-//   children: 'Hello World',
-// })
-const content = 'Hello World'
-const myClassName = 'container'
-const props = {
-  className: 'container',
-  children: 'Hello World',
-}
-const element = <div {...props} />
-ReactDOM.render(element, rootElement)
-</script>
-</body>
+<html>
+
+<head>
+	<title>Beginner's Guide to React</title>
+	<meta charset="UTF-8" />
+</head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+    <script type="text/babel">
+      const rootElement = document.getElementById('root')    
+      
+      const props = {
+        className: 'container',
+        children: 'Hello World'
+      }
+
+      // Uses the props object above:
+      // const element = <div {...props} />
+      
+      // Overrides 'container' (from props.className) with 'my-class':
+      // const element = <div {...props} className="my-class" />
+
+      // Overrides 'Hello World' (from props.children) with 'Goodbye World':
+      // const element = <div {...props} children='Goodbye World' />
+
+      // Same result as above:
+      const element = <div {...props}>Goodbye World</div>
+         
+      ReactDOM.render(element, rootElement)
+    </script>
+  </body>
+</html>

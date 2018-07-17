@@ -1,51 +1,67 @@
-<body>
-<div id="root"></div>
-<script src="https://unpkg.com/react@16.3.0/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16.3.0/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
-<script type="text/babel">
-const state = {eventCount: 0, username: ''}
+<html>
 
-function App() {
-  return (
-    <div>
-      <p>
-        There have been {state.eventCount} events
-      </p>
-      <p>
-        <button onClick={increment}>⚛️</button>
-      </p>
-      <p>You typed: {state.username}</p>
-      <p>
-        <input onChange={updateUsername} />
-      </p>
-    </div>
-  )
-}
+<head>
+	<title>Beginner's Guide to React</title>
+	<meta charset="UTF-8" />
+</head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
 
-function increment() {
-  setState({
-    eventCount: state.eventCount + 1,
-  })
-}
+    <script type="text/babel">
+    const rootElement = document.getElementById('root')
 
-function updateUsername(event) {
-  setState({
-    username: event.target.value,
-  })
-}
+    const state = {eventCount: 0, username: ''}
 
-function setState(newState) {
-  Object.assign(state, newState)
-  renderApp()
-}
 
-function renderApp() {
-  ReactDOM.render(
-    <App />,
-    document.getElementById('root'),
-  )
-}
-renderApp()
-</script>
-</body>
+    function increment() {
+      setState({ eventCount: state.eventCount +1
+      })
+    }
+
+    function updateUsername(event) {
+      setState({
+        username: event.target.value  
+      })  
+    }
+
+    function App() {
+      return (
+        <div>
+          <p>
+            There have been {state.eventCount} events.
+          </p>
+          <p>
+            <button onClick={increment}>
+              Click Me
+            </button>
+          </p>
+          <p>You typed: {state.username}</p>
+          <p>
+            <input onBlur={updateUsername} />
+          </p>
+        </div>
+      )
+    }
+
+    function setState(newState) {
+      Object.assign(state, newState)
+      renderApp()
+    }
+
+    function renderApp() {
+      ReactDOM.render(
+        <App />,
+        document.getElementById('root')
+      )
+    }
+
+    renderApp()
+    setState({eventCount: 10})
+
+    </script>
+  </body>
+</html>

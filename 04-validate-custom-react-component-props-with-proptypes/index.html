@@ -1,27 +1,38 @@
-<body>
-<script src="https://unpkg.com/react@16.3.0/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16.3.0/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/prop-types@15.6.0/prop-types.js"></script>
-<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
-<div id="root"></div>
+<html>
 
-<script type="text/babel">
-function SayHello(props) {
-  return (
-    <div>
-      Hello {props.firstName} {props.lastName}!
-    </div>
-  )
-}
+<head>
+	<title>Beginner's Guide to React</title>
+	<meta charset="UTF-8" />
+</head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
 
-SayHello.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
-}
+    <script type="text/babel">
+      const rootElement = document.getElementById('root')    
+      
+      class SayHello extends React.Component {
+        static propTypes = {
+          firstName: PropTypes.string.isRequired,
+          lastName: PropTypes.string.isRequired
+        }
 
-ReactDOM.render(
-  <SayHello firstName={true} />,
-  document.getElementById('root')
-)
-</script>
-</body>
+        render() {
+          const {firstName, lastName} = this.props
+          return (
+            <div>
+              Hello {firstName} {lastName}!
+            </div>
+          )
+        }
+      }
+      
+      const element = <SayHello firstName='Jojo' lastName='Potatoes' />
+
+      ReactDOM.render(element, rootElement)
+    </script>
+  </body>
+</html>

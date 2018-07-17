@@ -1,72 +1,83 @@
-<body>
-<div id="root"></div>
-<script src="https://unpkg.com/react@16.3.0/umd/react.development.js"></script>
-<script src="https://unpkg.com/react-dom@16.3.0/umd/react-dom.development.js"></script>
-<script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
-<script type="text/babel">
-class NameForm extends React.Component {
-  state = {error: this.props.getErrorMessage('')}
-  handleSubmit = event => {
-    event.preventDefault()
-    const value =
-      event.target.elements.username.value
-    const error = this.props.getErrorMessage(
-      value,
-    )
-    if (error) {
-      alert(`error: ${error}`)
-    } else {
-      alert(`success: ${value}`)
-    }
-  }
-  handleChange = event => {
-    const {value} = event.target
-    this.setState({
-      error: this.props.getErrorMessage(value),
-    })
-  }
+<html>
 
-  render() {
-    const {error} = this.state
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            onChange={this.handleChange}
-            name="username"
-          />
-        </label>
-        {error ? (
-          <div style={{color: 'red'}}>
-            {error}
-          </div>
-        ) : null}
-        <button
-          disabled={Boolean(error)}
-          type="submit"
-        >
-          Submit
-        </button>
-      </form>
-    )
-  }
-}
+<head>
+	<title>Beginner's Guide to React</title>
+	<meta charset="UTF-8" />
+</head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.3.1/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.3.1/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6.1/prop-types.js"></script>
 
-ReactDOM.render(
-  <NameForm
-    getErrorMessage={value => {
-      if (value.length < 3) {
-        return `Value must be at least 3 characters, but is only ${value.length}`
+    <script type="text/babel">
+      class NameForm extends React.Component {
+        state = {error: this.props.getErrorMessage('')}
+        
+        handleSubmit = event => {
+          event.preventDefault()
+          const value =
+            event.target.elements.username.value
+          const error = this.props.getErrorMessage(
+            value,
+          )
+          if (error) {
+            alert(`error: ${error}`)
+          } else {
+            alert(`success: ${value}`)
+          }
+        }
+        
+        handleChange = event => {
+          const {value} = event.target
+          this.setState({
+            error: this.props.getErrorMessage(value),
+          })
+        }
+        
+        render() {
+          const {error} = this.state
+          return (
+            <form onSubmit={this.handleSubmit}>
+              <label>
+                Name:
+                <input
+                  type="text"
+                  onChange={this.handleChange}
+                  name="username"
+                />
+              </label>
+              {error ? (
+                <div style={{color: 'red'}}>
+                  {error}
+                </div>
+              ) : null}
+              <button
+                disabled={Boolean(error)}
+                type="submit"
+              >
+                Submit
+              </button>
+            </form>
+          )
+        }
       }
-      if (!value.includes('s')) {
-        return `Value does not include "s" but it should!`
-      }
-      return null
-    }}
-  />,
-  document.getElementById('root'),
-)
-</script>
-</body>
+      
+      ReactDOM.render(
+        <NameForm
+          getErrorMessage={value => {
+            if (value.length < 3) {
+              return `Value must be at least 3 characters, but is only ${value.length}`
+            }
+            if (!value.includes('s')) {
+              return `Value does not include "s" but it should!`
+            }
+            return null
+          }}
+        />,
+        document.getElementById('root'),
+      )
+    </script>
+  </body>
+</html>
